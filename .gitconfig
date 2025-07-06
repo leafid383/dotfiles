@@ -1,0 +1,12 @@
+[user]
+	name = leafid383
+	email = leafid383@gmail.com
+[init]
+	defaultBranch = main
+[core]
+	editor = nvim
+	excludesfile = /Users/fumi/.gitignore_global
+[push]
+	default = simple
+[color]
+	ui = auto
