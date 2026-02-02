@@ -65,6 +65,57 @@ stow -n -v -t ~ zsh
 stow -D -t ~ zsh
 ```
 
+## 既存環境への適用
+
+既にdotfilesが実ファイルとして存在するマシンで、stow管理のシンボリックリンクに切り替える手順。
+
+### 1. stowのインストール
+
+```bash
+brew install stow
+```
+
+### 2. リポジトリのクローン
+
+```bash
+git clone git@github.com:leafid383/dotfiles.git ~/Private/dotfiles
+cd ~/Private/dotfiles
+```
+
+### 3. 既存ファイルのバックアップ
+
+stowは既存の実ファイルがあるとエラーになるため、事前にバックアップする。
+
+```bash
+# ホームディレクトリ直下のファイル
+for f in .zshrc .gitconfig .gitignore_global .tmux.conf; do
+  [ -f ~/$f ] && mv ~/$f ~/$f.bak
+done
+
+# .config 配下のディレクトリ
+for d in ghostty zellij; do
+  [ -d ~/.config/$d ] && mv ~/.config/$d ~/.config/$d.bak
+done
+```
+
+### 4. stowでシンボリックリンクを作成
+
+```bash
+stow -v -t ~ zsh git tmux ghostty zellij
+```
+
+### 5. 動作確認とバックアップの削除
+
+新しいシェルを開いて設定が正しく反映されていることを確認後、バックアップを削除する。
+
+```bash
+exec zsh
+
+# 問題なければバックアップを削除
+rm -f ~/.zshrc.bak ~/.gitconfig.bak ~/.gitignore_global.bak ~/.tmux.conf.bak
+rm -rf ~/.config/ghostty.bak ~/.config/zellij.bak
+```
+
 ## Homebrewパッケージ
 
 `Brewfile`で管理。追加・更新時：
