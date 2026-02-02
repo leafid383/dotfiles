@@ -1,0 +1,54 @@
+# Ghostty + Tmux Configuration
+# VSCode-like development environment
+
+# フォント設定
+font-family = "JetBrainsMono Nerd Font"
+font-size = 14
+font-thicken = true
+
+# テーマ（ghostty +list-themes で一覧表示可能）
+theme = tokyonight
+
+# ウィンドウ設定
+window-padding-x = 10
+window-padding-y = 10
+background-opacity = 0.8
+background-blur = true
+maximize = true
+window-inherit-working-directory = true
+
+# セル高さ調整（行間を少し広げる）
+adjust-cell-height = 2
+
+# tmux自動起動
+command = ~/.config/ghostty/tmux.sh
+
+# ウィンドウ閉じる時の確認を無効化（tmuxがセッション管理するため）
+confirm-close-surface = false
+
+# ========================================
+# Keybind設定（tmux連携）
+# tmuxプレフィックス: Ctrl+B
+# ========================================
+
+# Cmd+z → tmux pane zoom toggle (Ctrl+B → z)
+keybind = cmd+z=text:\x02z
+
+# Cmd+n → 新規tmuxウィンドウ (Ctrl+B → c)
+keybind = cmd+n=text:\x02c
+
+# Cmd+w → tmux pane/window kill (Ctrl+B → x)
+keybind = cmd+w=text:\x02x
+
+# Cmd+1-9 → tmux window切り替え
+keybind = cmd+one=text:\x021
+keybind = cmd+two=text:\x022
+keybind = cmd+three=text:\x023
+keybind = cmd+four=text:\x024
+keybind = cmd+five=text:\x025
+
+# Cmd+h/j/k/l → ペイン移動
+keybind = cmd+h=text:\x02h
+keybind = cmd+j=text:\x02j
+keybind = cmd+k=text:\x02k
+keybind = cmd+l=text:\x02l

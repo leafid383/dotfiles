@@ -12,22 +12,11 @@ echo -e "${BLUE}🚀 dotfilesのセットアップを開始します...${NC}"
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-# シンボリックリンクを作成
-echo -e "${YELLOW}📁 シンボリックリンクを作成中...${NC}"
-ln -sf $DOTFILES_DIR/.zshrc ~/.zshrc
-ln -sf $DOTFILES_DIR/.gitconfig ~/.gitconfig
-ln -sf $DOTFILES_DIR/.gitignore_global ~/.gitignore_global
-
-# p10k設定ファイルがあればコピー
-if [ -f "$DOTFILES_DIR/.p10k.zsh" ]; then
-    ln -sf $DOTFILES_DIR/.p10k.zsh ~/.p10k.zsh
-fi
-
 # Homebrewがない場合はインストール
 if ! command -v brew >/dev/null 2>&1; then
     echo -e "${YELLOW}🍺 Homebrewをインストール中...${NC}"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    
+
     # HomebrewをPATHに追加
     echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -36,6 +25,14 @@ fi
 # パッケージをインストール
 echo -e "${YELLOW}📦 Homebrewパッケージをインストール中...${NC}"
 brew bundle --file=$DOTFILES_DIR/Brewfile
+
+# stowでシンボリックリンクを作成
+echo -e "${YELLOW}📁 stowでシンボリックリンクを作成中...${NC}"
+PACKAGES=(zsh git tmux ghostty zellij)
+for pkg in "${PACKAGES[@]}"; do
+    echo -e "  → ${pkg}"
+    stow -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
+done
 
 # Oh My Zshがない場合はインストール
 if [ ! -d "$HOME/.oh-my-zsh" ]; then

@@ -1,3 +1,5 @@
+brew "stow"
+brew "zellij"
 brew "bat"
 brew "fzf"
 brew "gh"
