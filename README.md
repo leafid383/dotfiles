@@ -21,7 +21,34 @@ exec zsh
 | `git/` | Git設定、グローバルgitignore |
 | `tmux/` | tmux設定（Ghostty連携、tokyonight風テーマ） |
 | `ghostty/` | Ghosttyターミナル設定、tmux自動起動スクリプト |
-| `zellij/` | Zellij設定、VSCode風レイアウト |
+
+### zsh
+
+- **テーマ**: robbyrussell（Oh My Zsh）
+- **プラグイン**: git
+- **エイリアス**: `gp`(git pull), `gs`(git switch), `gl`(git log --oneline --graph), `v`(nvim), `reload`(source ~/.zshrc)
+
+### git
+
+- **エディタ**: nvim
+- **デフォルトブランチ**: main
+- **push方式**: simple
+- **グローバルgitignore**: macOS系ファイル(.DS_Store等)、エディタ設定(.vscode/, .idea/)、Node.js/Python関連の一時ファイル
+
+### ghostty
+
+- **フォント**: JetBrainsMono Nerd Font (14pt)
+- **テーマ**: tokyonight
+- **ウィンドウ**: 半透明背景(opacity 0.8)、ブラー有効、起動時最大化
+- **tmux連携**: 起動時にtmuxを自動起動、Cmd+n/w/z/1-9やCmd+h/j/k/lでtmux操作をショートカット
+
+### tmux
+
+- **プレフィックス**: Ctrl+B
+- **ターミナル**: xterm-ghostty（TrueColor対応）
+- **操作**: マウス有効、viモードコピー（y→pbcopy）、vim風ペイン移動(h/j/k/l)
+- **外観**: tokyonight風テーマ、ステータスバー上部表示
+- **その他**: Claude Code向けパススルー有効、VSCode風レイアウト（Prefix+V）
 
 ## ディレクトリ構造
 
@@ -39,11 +66,6 @@ dotfiles/
 │       ├── config
 │       ├── tmux.sh
 │       └── vscode-layout.sh
-├── zellij/
-│   └── .config/zellij/
-│       ├── config.kdl
-│       └── layouts/
-│           └── vscode.kdl
 ├── Brewfile
 ├── install.sh
 └── README.md
@@ -53,7 +75,7 @@ dotfiles/
 
 ```bash
 # 全パッケージ適用
-stow -t ~ zsh git tmux ghostty zellij
+stow -t ~ zsh git tmux ghostty
 
 # 特定パッケージのみ
 stow -t ~ zsh
@@ -93,15 +115,13 @@ for f in .zshrc .gitconfig .gitignore_global .tmux.conf; do
 done
 
 # .config 配下のディレクトリ
-for d in ghostty zellij; do
-  [ -d ~/.config/$d ] && mv ~/.config/$d ~/.config/$d.bak
-done
+[ -d ~/.config/ghostty ] && mv ~/.config/ghostty ~/.config/ghostty.bak
 ```
 
 ### 4. stowでシンボリックリンクを作成
 
 ```bash
-stow -v -t ~ zsh git tmux ghostty zellij
+stow -v -t ~ zsh git tmux ghostty
 ```
 
 ### 5. 動作確認とバックアップの削除
@@ -113,7 +133,7 @@ exec zsh
 
 # 問題なければバックアップを削除
 rm -f ~/.zshrc.bak ~/.gitconfig.bak ~/.gitignore_global.bak ~/.tmux.conf.bak
-rm -rf ~/.config/ghostty.bak ~/.config/zellij.bak
+rm -rf ~/.config/ghostty.bak
 ```
 
 ## Homebrewパッケージ

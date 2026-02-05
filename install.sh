@@ -28,7 +28,7 @@ brew bundle --file=$DOTFILES_DIR/Brewfile
 
 # stowでシンボリックリンクを作成
 echo -e "${YELLOW}📁 stowでシンボリックリンクを作成中...${NC}"
-PACKAGES=(zsh git tmux ghostty zellij)
+PACKAGES=(zsh git tmux ghostty)
 for pkg in "${PACKAGES[@]}"; do
     echo -e "  → ${pkg}"
     stow -d "$DOTFILES_DIR" -t "$HOME" "$pkg"
