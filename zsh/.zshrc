@@ -109,3 +109,12 @@ alias gs="git switch"
 alias gl="git log --oneline --graph"
 alias v="nvim"
 alias reload="source ~/.zshrc"
+
+# git push with auto upstream
+gps() {
+  if git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
+    git push
+  else
+    git push -u origin "$(git branch --show-current)"
+  fi
+}
