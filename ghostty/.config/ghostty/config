@@ -2,8 +2,8 @@
 # VSCode-like development environment
 
 # フォント設定
-font-family = "JetBrainsMono Nerd Font"
-font-size = 14
+font-family = "PlemolJP Nerd Font"
+font-size = 12
 font-thicken = true
 
 # テーマ（ghostty +list-themes で一覧表示可能）
@@ -12,10 +12,12 @@ theme = tokyonight
 # ウィンドウ設定
 window-padding-x = 10
 window-padding-y = 10
-background-opacity = 0.8
+background-opacity = 0.5
 background-blur = true
 maximize = true
 window-inherit-working-directory = true
+
+unfocused-split-opacity = 0.85
 
 # セル高さ調整（行間を少し広げる）
 adjust-cell-height = 2

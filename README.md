@@ -91,10 +91,10 @@ stow -D -t ~ zsh
 
 既にdotfilesが実ファイルとして存在するマシンで、stow管理のシンボリックリンクに切り替える手順。
 
-### 1. stowのインストール
+### 1. 必要なツールのインストール
 
 ```bash
-brew install stow
+brew install stow tmux
 ```
 
 ### 2. リポジトリのクローン
