@@ -45,7 +45,7 @@ exec zsh
 ### tmux
 
 - **プレフィックス**: Ctrl+B
-- **ターミナル**: xterm-ghostty（TrueColor対応）
+- **ターミナル**: xterm-256color（TrueColor対応、terminal-overridesで`:Tc`指定）
 - **操作**: マウス有効、viモードコピー（y→pbcopy）、vim風ペイン移動(h/j/k/l)
 - **外観**: tokyonight風テーマ、ステータスバー上部表示
 - **その他**: Claude Code向けパススルー有効、VSCode風レイアウト（Prefix+V）
@@ -207,6 +207,32 @@ stowで`$HOME`にシンボリックリンクされる設定ファイル。
 | `ghostty/.config/ghostty/config` | `~/.config/ghostty/config` | Ghostty設定（フォント、テーマ、ウィンドウ） |
 | `ghostty/.config/ghostty/tmux.sh` | `~/.config/ghostty/tmux.sh` | tmux自動起動スクリプト |
 | `ghostty/.config/ghostty/vscode-layout.sh` | `~/.config/ghostty/vscode-layout.sh` | VSCode風レイアウトスクリプト |
+
+## トラブルシューティング
+
+### Ghosttyでoh-my-zshの読み込みに失敗する
+
+**症状**: Ghostty起動時に以下のエラーが表示され、プロンプトが壊れる。
+
+```
+.zshrc:source:5: no such file or directory: /Users/xxx/.oh-my-zsh/oh-my-zsh.sh
+$fg[green]→$reset_color $(custom_prompt):
+```
+
+**原因**: `.tmux.conf`の`default-terminal`に`xterm-ghostty`を指定しているが、terminfoがシステムにインストールされていない。tmux内のシェル起動時にterminfo解決が失敗し、oh-my-zshの`source`がエラーになる。
+
+**解決方法**: `.tmux.conf`のターミナル設定を変更する。
+
+```diff
+- set -g default-terminal "xterm-ghostty"
+- set -ag terminal-overrides ",xterm-ghostty:Tc"
++ set -g default-terminal "xterm-256color"
++ set -ag terminal-overrides ",xterm-256color:Tc"
+```
+
+変更後、`tmux kill-server`でtmuxを終了してGhosttyを再起動する。
+
+> **補足**: `xterm-ghostty`のterminfoをインストールすれば`xterm-ghostty`も使用可能だが、`xterm-256color` + `:Tc`overrideで同等のTrueColor対応が得られるため、互換性の高いこちらを推奨。
 
 ## 手動設定が必要な項目
 
