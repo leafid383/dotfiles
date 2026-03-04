@@ -26,6 +26,33 @@ fi
 echo -e "${YELLOW}📦 Homebrewパッケージをインストール中...${NC}"
 brew bundle --file=$DOTFILES_DIR/Brewfile
 
+# 各ツールのインストール確認
+echo -e "${YELLOW}🔍 ツールのインストール確認中...${NC}"
+
+# neovim (.zshrcのaliasで使用)
+if ! command -v nvim >/dev/null 2>&1; then
+    echo -e "${YELLOW}  → neovimをインストール中...${NC}"
+    brew install neovim
+fi
+
+# tmux (.tmux.conf)
+if ! command -v tmux >/dev/null 2>&1; then
+    echo -e "${YELLOW}  → tmuxをインストール中...${NC}"
+    brew install tmux
+fi
+
+# ghostty (ghostty/config)
+if ! command -v ghostty >/dev/null 2>&1; then
+    echo -e "${YELLOW}  → ghosttyをインストール中...${NC}"
+    brew install --cask ghostty
+fi
+
+# git (.gitconfig)
+if ! command -v git >/dev/null 2>&1; then
+    echo -e "${YELLOW}  → gitをインストール中...${NC}"
+    brew install git
+fi
+
 # stowでシンボリックリンクを作成
 echo -e "${YELLOW}📁 stowでシンボリックリンクを作成中...${NC}"
 PACKAGES=(zsh git tmux ghostty)
@@ -40,12 +67,5 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
     RUNZSH=no sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
-# Powerlevel10kがない場合はインストール
-if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k" ]; then
-    echo -e "${YELLOW}⚡ Powerlevel10kをインストール中...${NC}"
-    git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
-fi
-
 echo -e "${GREEN}✅ dotfilesのセットアップが完了しました！${NC}"
 echo -e "${YELLOW}🔄 ターミナルを再起動するか、以下のコマンドを実行してください: exec zsh${NC}"
-echo -e "${BLUE}💡 Powerlevel10kの設定を忘れずに: p10k configure${NC}"

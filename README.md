@@ -17,7 +17,7 @@ exec zsh
 
 | パッケージ | 内容 |
 |-----------|------|
-| `zsh/` | Zsh + Oh My Zsh + Powerlevel10k 設定 |
+| `zsh/` | Zsh + Oh My Zsh 設定 |
 | `git/` | Git設定、グローバルgitignore |
 | `tmux/` | tmux設定（Ghostty連携、tokyonight風テーマ） |
 | `ghostty/` | Ghosttyターミナル設定、tmux自動起動スクリプト |
@@ -136,17 +136,80 @@ rm -f ~/.zshrc.bak ~/.gitconfig.bak ~/.gitignore_global.bak ~/.tmux.conf.bak
 rm -rf ~/.config/ghostty.bak
 ```
 
-## Homebrewパッケージ
+## インストール一覧
 
-`Brewfile`で管理。追加・更新時：
+`install.sh`が自動でインストールするもの。
+
+### CLIツール（Brewfile）
+
+| パッケージ | 説明 |
+|-----------|------|
+| `stow` | dotfiles管理（シンボリックリンク） |
+| `bat` | catの代替（シンタックスハイライト） |
+| `fzf` | ファジーファインダー |
+| `gh` | GitHub CLI |
+| `git` | バージョン管理 |
+| `htop` | プロセスモニター |
+| `jq` | JSONパーサー |
+| `lazygit` | Git TUI |
+| `navi` | コマンドチートシート |
+| `neovim` | テキストエディタ |
+| `node` | Node.js |
+| `tmux` | ターミナルマルチプレクサ |
+| `tree` | ディレクトリツリー表示 |
+| `wget` | ファイルダウンロード |
+| `zoxide` | スマートcd |
+
+### アプリ（Brewfile cask）
+
+| パッケージ | 説明 |
+|-----------|------|
+| `alfred` | ランチャー |
+| `claude` | Claude Desktop |
+| `clipy` | クリップボード管理 |
+| `discord` | チャット |
+| `firefox@developer-edition` | ブラウザ（開発者版） |
+| `google-chrome` | ブラウザ |
+| `karabiner-elements` | キーリマッパー |
+| `notion` | ノート |
+| `obsidian` | ナレッジベース |
+| `slack` | チャット |
+| `visual-studio-code` | エディタ |
+| `zoom` | ビデオ会議 |
+
+### 個別インストール確認（install.sh）
+
+Brewfileとは別に、dotfilesが直接設定するツールを個別に確認・インストール。
+
+| ツール | 対応dotfile |
+|--------|------------|
+| `neovim` | `.zshrc`のalias `v` |
+| `tmux` | `.tmux.conf` |
+| `ghostty` | `.config/ghostty/config` |
+| `git` | `.gitconfig` |
+
+Brewfileでの更新方法：
 
 ```bash
 brew bundle dump --force --file=~/Private/dotfiles/Brewfile
 ```
 
+## 設定ファイル一覧
+
+stowで`$HOME`にシンボリックリンクされる設定ファイル。
+
+| ファイル | リンク先 | 説明 |
+|---------|---------|------|
+| `zsh/.zshrc` | `~/.zshrc` | Zsh設定、エイリアス、プロンプト |
+| `git/.gitconfig` | `~/.gitconfig` | Git設定（エディタ、ブランチ、push方式） |
+| `git/.gitignore_global` | `~/.gitignore_global` | グローバルgitignore |
+| `tmux/.tmux.conf` | `~/.tmux.conf` | tmux設定、テーマ、キーバインド |
+| `ghostty/.config/ghostty/config` | `~/.config/ghostty/config` | Ghostty設定（フォント、テーマ、ウィンドウ） |
+| `ghostty/.config/ghostty/tmux.sh` | `~/.config/ghostty/tmux.sh` | tmux自動起動スクリプト |
+| `ghostty/.config/ghostty/vscode-layout.sh` | `~/.config/ghostty/vscode-layout.sh` | VSCode風レイアウトスクリプト |
+
 ## 手動設定が必要な項目
 
 - SSH鍵の設定・GitHub登録
 - `git config --global user.name / user.email`
-- `p10k configure`（Powerlevel10kテーマ）
 - `claude`（Claude Code認証）
