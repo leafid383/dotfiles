@@ -24,7 +24,7 @@ fi
 
 # パッケージをインストール
 echo -e "${YELLOW}📦 Homebrewパッケージをインストール中...${NC}"
-brew bundle --file=$DOTFILES_DIR/Brewfile
+brew bundle --file=$DOTFILES_DIR/Brewfile || echo -e "${YELLOW}⚠️  一部のBrewfileパッケージが失敗しました（続行します）${NC}"
 
 # 各ツールのインストール確認
 echo -e "${YELLOW}🔍 ツールのインストール確認中...${NC}"
